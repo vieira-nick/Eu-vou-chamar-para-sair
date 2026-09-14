@@ -1,0 +1,308 @@
+/* ---------- tokens ---------- */
+:root {
+  --ink: #3c2a1e;
+  --ink-soft: #6d5138;
+  --paper: #f7efdd;
+  --paper-shade: #e9dab7;
+  --wax: #8e1f2b;
+  --wax-dark: #641119;
+  --wax-light: #b23a44;
+  --gold: #b8912f;
+  --desk-deep: #2a1420;
+  --desk-mid: #401b2a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 20% -10%, #5a2438 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 110%, #4a1d33 0%, transparent 55%),
+    linear-gradient(160deg, var(--desk-deep), var(--desk-mid));
+  overflow: hidden;
+  position: relative;
+}
+
+/* subtle desk grain */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 3px 3px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---------- layout ---------- */
+.desk {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  position: relative;
+}
+
+/* ---------- the letter ---------- */
+.letter {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 440px;
+  padding: 56px 40px 40px;
+  text-align: center;
+  background: var(--paper);
+  border-radius: 3px 16px 4px 14px;
+  transform: rotate(-0.6deg);
+  animation: settle 0.7s cubic-bezier(.2,.8,.2,1);
+  box-shadow:
+    0 2px 0 var(--paper-shade) inset,
+    0 30px 60px -20px rgba(20, 6, 14, 0.6),
+    0 8px 18px rgba(20, 6, 14, 0.35);
+}
+
+/* stacked paper peeking out behind */
+.letter::before,
+.letter::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  border-radius: inherit;
+  z-index: -1;
+}
+.letter::before {
+  transform: rotate(2.4deg) translate(4px, 6px);
+  background: #f1e4c8;
+}
+.letter::after {
+  transform: rotate(-2.1deg) translate(-5px, 4px);
+  background: #ece0bd;
+}
+
+/* fold crease */
+.letter {
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(50% - 1px),
+    rgba(60, 42, 30, 0.08) 50%,
+    transparent calc(50% + 1px)
+  );
+  background-color: var(--paper);
+}
+
+@keyframes settle {
+  from { transform: rotate(-4deg) translateY(-16px) scale(0.96); opacity: 0; }
+  to   { transform: rotate(-0.6deg) translateY(0) scale(1); opacity: 1; }
+}
+
+/* ---------- wax seal ---------- */
+.seal {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-6deg);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, var(--wax-light), var(--wax) 55%, var(--wax-dark) 100%);
+  box-shadow:
+    0 6px 14px rgba(20, 6, 14, 0.5),
+    inset 0 -4px 6px rgba(0,0,0,0.35),
+    inset 0 3px 4px rgba(255,255,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.seal-heart {
+  width: 26px;
+  height: 26px;
+  fill: #e8c3a0;
+  opacity: 0.9;
+  filter: drop-shadow(0 1px 0.5px rgba(0,0,0,0.4));
+}
+
+/* ---------- text ---------- */
+.letter-eyebrow {
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+
+.letter-title {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1.05;
+  color: var(--wax-dark);
+  margin-bottom: 14px;
+}
+
+.letter-body {
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  min-height: 34px;
+  margin-bottom: 26px;
+  transition: opacity 0.2s ease;
+}
+
+.signoff {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+.signoff .signature {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.5rem;
+  color: var(--wax);
+}
+
+/* ---------- buttons ---------- */
+.buttons {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 58px;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+#yesBtn {
+  padding: 13px 34px;
+  font-size: 1.15rem;
+  color: #f6ecda;
+  background: linear-gradient(160deg, var(--wax-light), var(--wax-dark));
+  border-radius: 30px;
+  box-shadow:
+    0 10px 18px -6px rgba(100, 17, 25, 0.55),
+    inset 0 1px 1px rgba(255,255,255,0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+#yesBtn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow:
+    0 14px 22px -6px rgba(100, 17, 25, 0.6),
+    inset 0 1px 1px rgba(255,255,255,0.35);
+}
+#yesBtn:focus-visible,
+#noBtn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+#noBtn {
+  padding: 12px 26px;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1.5px solid var(--ink-soft);
+  border-radius: 30px;
+  position: fixed;
+  top: 60%;
+  left: 68%;
+  z-index: 30;
+  transition:
+    top 0.4s cubic-bezier(.3,1.6,.5,1),
+    left 0.4s cubic-bezier(.3,1.6,.5,1),
+    transform 0.15s ease,
+    opacity 0.2s ease;
+}
+#noBtn:hover {
+  transform: rotate(-3deg);
+}
+
+/* ---------- result ---------- */
+#result {
+  margin-top: 24px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--wax-dark);
+  display: none;
+}
+#result.show {
+  display: block;
+  animation: settle 0.5s cubic-bezier(.2,.8,.2,1);
+}
+
+/* ---------- falling petals / hearts ---------- */
+.petals-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.falling-petal {
+  position: absolute;
+  top: -8%;
+  opacity: 0.8;
+  animation-name: fall;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+  user-select: none;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.25));
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(55vh) translateX(var(--drift, 20px)) rotate(180deg);
+  }
+  100% {
+    transform: translateY(112vh) translateX(0) rotate(360deg);
+    opacity: 0.4;
+  }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 480px) {
+  .letter {
+    padding: 48px 26px 32px;
+  }
+  .letter-title {
+    font-size: 2.4rem;
+  }
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .letter,
+  #result.show {
+    animation: none;
+  }
+  .falling-petal {
+    animation: none;
+    display: none;
+  }
+  #noBtn {
+    transition: none;
+  }
+}
