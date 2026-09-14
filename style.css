@@ -217,8 +217,8 @@ button {
   padding: 12px 26px;
   font-size: 1.05rem;
   color: var(--ink-soft);
-  background: transparent;
-  border: 1.5px solid var(--ink-soft);
+  background: #ffffff;
+  border: none;
   border-radius: 30px;
   position: fixed;
   top: 60%;
